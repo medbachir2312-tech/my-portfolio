@@ -1,0 +1,75 @@
+<div class="login-page">
+    <div class="login-container">
+        <div class="login-card card">
+            <!-- Logo/Titre -->
+            <div class="login-header">
+                <div class="login-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h1 class="login-title">Administration</h1>
+                <p class="login-subtitle">Connectez-vous pour accéder au panneau d'administration</p>
+            </div>
+
+            <!-- Message d'erreur -->
+            <div *ngIf="errorMessage" class="alert alert-error">
+                <i class="fas fa-exclamation-circle"></i>
+                <p>{{ errorMessage }}</p>
+            </div>
+
+            <!-- Formulaire de connexion -->
+            <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+                <!-- Username -->
+                <div class="form-group">
+                    <label for="username" class="form-label">
+                        <i class="fas fa-user"></i>
+                        Nom d'utilisateur
+                    </label>
+                    <input type="text" id="username" formControlName="username" class="form-control"
+                        [class.error]="f['username'].invalid && f['username'].touched" placeholder="admin"
+                        autocomplete="username">
+                    <span *ngIf="f['username'].invalid && f['username'].touched" class="error-message">
+                        Le nom d'utilisateur est requis
+                    </span>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <label for="password" class="form-label">
+                        <i class="fas fa-lock"></i>
+                        Mot de passe
+                    </label>
+                    <input type="password" id="password" formControlName="password" class="form-control"
+                        [class.error]="f['password'].invalid && f['password'].touched" placeholder="••••••••"
+                        autocomplete="current-password">
+                    <span *ngIf="f['password'].invalid && f['password'].touched" class="error-message">
+                        Le mot de passe est requis
+                    </span>
+                </div>
+
+                <!-- Bouton de connexion -->
+                <button type="submit" class="btn btn-primary btn-lg login-btn" [disabled]="isSubmitting">
+                    <span *ngIf="!isSubmitting">
+                        <i class="fas fa-sign-in-alt"></i>
+                        Se connecter
+                    </span>
+                    <span *ngIf="isSubmitting">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        Connexion...
+                    </span>
+                </button>
+            </form>
+
+            <!-- Info -->
+            <div class="login-footer">
+                <p class="login-info">
+                    <i class="fas fa-info-circle"></i>
+                    Credentials par défaut: <strong>admin</strong> / <strong>admin123</strong>
+                </p>
+                <a href="/" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    Retour au site
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

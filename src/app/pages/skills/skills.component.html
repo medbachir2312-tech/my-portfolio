@@ -1,0 +1,42 @@
+<app-navbar></app-navbar>
+
+<main class="skills-page">
+    <section class="section">
+        <div class="container">
+            <div class="section-header text-center fade-in">
+                <h1 class="section-title">Mes Compétences</h1>
+                <p class="section-description">Technologies et outils que je maîtrise</p>
+            </div>
+
+            <div class="skills-categories">
+                <div *ngFor="let category of categories" class="category-section">
+                    <h2 class="category-title">
+                        <i class="fas fa-code"></i>
+                        {{ category }}
+                    </h2>
+
+                    <div class="skills-grid">
+                        <div *ngFor="let skill of getSkillsByCategory(category)" class="skill-card card">
+                            <div class="skill-header">
+                                <div class="skill-icon" [style.color]="skill.color">
+                                    <i class="fas fa-code"></i>
+                                </div>
+                                <div class="skill-info">
+                                    <h3 class="skill-name">{{ skill.name }}</h3>
+                                    <span class="skill-level-text">{{ skill.level }}%</span>
+                                </div>
+                            </div>
+                            <div class="skill-progress">
+                                <div class="skill-progress-bar" [style.width.%]="skill.level"
+                                    [style.background]="skill.color || 'var(--color-primary)'">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<app-footer></app-footer>

@@ -1,0 +1,63 @@
+<app-navbar></app-navbar>
+
+<main class="projects-page">
+    <section class="section">
+        <div class="container">
+            <div class="section-header text-center fade-in">
+                <h1 class="section-title">Mes Projets</h1>
+                <p class="section-description">Découvrez mes réalisations et projets personnels</p>
+            </div>
+
+            <!-- Filtres -->
+            <div class="filters">
+                <button class="filter-btn" [class.active]="selectedCategory === 'all'"
+                    (click)="filterByCategory('all')">
+                    Tous
+                </button>
+                <button *ngFor="let category of categories" class="filter-btn"
+                    [class.active]="selectedCategory === category" (click)="filterByCategory(category)">
+                    {{ category }}
+                </button>
+            </div>
+
+            <!-- Grille de projets -->
+            <div class="projects-grid">
+                <article *ngFor="let project of filteredProjects" class="project-card card">
+                    <div class="project-image">
+                        <img [src]="project.imageUrl || '/assets/images/project-placeholder.jpg'" [alt]="project.title">
+                        <div class="project-overlay">
+                            <a [routerLink]="['/projects', project.id]" class="btn btn-primary">
+                                <i class="fas fa-eye"></i> Voir détails
+                            </a>
+                        </div>
+                    </div>
+                    <div class="project-content">
+                        <span class="project-category">{{ project.category }}</span>
+                        <h3 class="project-title">{{ project.title }}</h3>
+                        <p class="project-description">{{ project.description }}</p>
+                        <div class="project-technologies">
+                            <span *ngFor="let tech of project.technologies.slice(0, 4)" class="tech-badge">{{ tech
+                                }}</span>
+                        </div>
+                        <div class="project-links">
+                            <a *ngIf="project.githubUrl" [href]="project.githubUrl" target="_blank"
+                                class="project-link">
+                                <i class="fab fa-github"></i> Code
+                            </a>
+                            <a *ngIf="project.demoUrl" [href]="project.demoUrl" target="_blank" class="project-link">
+                                <i class="fas fa-external-link-alt"></i> Démo
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div *ngIf="filteredProjects.length === 0" class="no-projects">
+                <i class="fas fa-folder-open"></i>
+                <p>Aucun projet dans cette catégorie</p>
+            </div>
+        </div>
+    </section>
+</main>
+
+<app-footer></app-footer>

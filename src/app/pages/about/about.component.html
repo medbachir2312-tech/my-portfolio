@@ -1,0 +1,65 @@
+<app-navbar></app-navbar>
+
+<main class="about-page">
+    <section class="section about-hero">
+        <div class="container">
+            <div class="about-header text-center fade-in">
+                <h1 class="section-title">À propos de moi</h1>
+                <p class="section-description">
+                    Découvrez mon parcours, mes compétences et ma passion pour le développement web
+                </p>
+            </div>
+
+            <div class="about-content">
+                <div class="about-image slide-in-left">
+                    <div class="image-wrapper">
+                        <img [src]="profile?.avatar || '/assets/images/avatar-placeholder.jpg'"
+                            [alt]="profile?.fullName">
+                        <div class="image-overlay"></div>
+                    </div>
+                </div>
+
+                <div class="about-text slide-in-right">
+                    <h2 class="about-name">{{ profile?.fullName }}</h2>
+                    <p class="about-role">{{ profile?.role }}</p>
+                    <p class="about-description">{{ profile?.about }}</p>
+
+                    <div class="about-actions">
+                        <a routerLink="/contact" class="btn btn-primary">
+                            <i class="fas fa-envelope"></i>
+                            <span>Me contacter</span>
+                        </a>
+                        <a *ngIf="profile?.resumeUrl; let resumeUrl" [attr.href]="resumeUrl" target="_blank"
+                            class="btn btn-outline">
+                            <i class="fas fa-download"></i>
+                            <span>Télécharger CV</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section journey-section bg-secondary">
+        <div class="container">
+            <h2 class="section-title text-center">Mon Parcours</h2>
+            <div class="journey-content card">
+                <p>{{ profile?.journey }}</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section soft-skills-section">
+        <div class="container">
+            <h2 class="section-title text-center">Soft Skills</h2>
+            <div class="skills-grid">
+                <div *ngFor="let skill of profile?.softSkills" class="skill-item card">
+                    <i class="fas fa-check-circle"></i>
+                    <span>{{ skill }}</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<app-footer></app-footer>

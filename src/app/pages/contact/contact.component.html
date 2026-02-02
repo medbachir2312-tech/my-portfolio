@@ -1,0 +1,164 @@
+<app-navbar></app-navbar>
+
+<main class="contact-page">
+    <section class="section contact-section">
+        <div class="container">
+            <!-- En-tête -->
+            <div class="section-header text-center fade-in">
+                <h1 class="section-title">Contactez-moi</h1>
+                <p class="section-description">
+                    Une question, un projet ou simplement envie de discuter ? N'hésitez pas à me contacter !
+                </p>
+            </div>
+
+            <div class="contact-content">
+                <!-- Informations de contact -->
+                <div class="contact-info slide-in-left">
+                    <div class="info-card card">
+                        <h2 class="info-title">Informations de contact</h2>
+                        <p class="info-description">
+                            Je suis toujours ouvert aux nouvelles opportunités et collaborations.
+                        </p>
+
+                        <div class="contact-details" *ngIf="profile as p">
+                            <div class="contact-item" *ngIf="p.email">
+                                <div class="contact-icon">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <h3>Email</h3>
+                                    <a [attr.href]="'mailto:' + p.email">{{ p.email }}</a>
+                                </div>
+                            </div>
+
+                            <div class="contact-item" *ngIf="p.phone">
+                                <div class="contact-icon">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <h3>Téléphone</h3>
+                                    <a [attr.href]="'tel:' + p.phone">{{ p.phone }}</a>
+                                </div>
+                            </div>
+
+                            <div class="contact-item" *ngIf="p.location">
+                                <div class="contact-icon">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div class="contact-text">
+                                    <h3>Localisation</h3>
+                                    <p>{{ p.location }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Réseaux sociaux -->
+                        <div class="social-links" *ngIf="profile as p">
+                            <h3 class="social-title">Suivez-moi</h3>
+                            <div class="social-icons">
+                                <a *ngIf="p.github" [attr.href]="p.github" target="_blank" rel="noopener noreferrer"
+                                    class="social-icon" aria-label="GitHub">
+                                    <i class="fab fa-github"></i>
+                                </a>
+                                <a *ngIf="p.linkedin" [attr.href]="p.linkedin" target="_blank" rel="noopener noreferrer"
+                                    class="social-icon" aria-label="LinkedIn">
+                                    <i class="fab fa-linkedin"></i>
+                                </a>
+                                <a *ngIf="p.twitter" [attr.href]="p.twitter" target="_blank" rel="noopener noreferrer"
+                                    class="social-icon" aria-label="Twitter">
+                                    <i class="fab fa-twitter"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formulaire de contact -->
+                <div class="contact-form-wrapper slide-in-right">
+                    <div class="form-card card">
+                        <h2 class="form-title">Envoyez-moi un message</h2>
+
+                        <!-- Message de succès -->
+                        <div *ngIf="isSubmitted" class="alert alert-success">
+                            <i class="fas fa-check-circle"></i>
+                            <p>Merci pour votre message ! Je vous répondrai dans les plus brefs délais.</p>
+                        </div>
+
+                        <!-- Message d'erreur -->
+                        <div *ngIf="isError" class="alert alert-danger">
+                            <i class="fas fa-exclamation-circle"></i>
+                            <p>{{ errorMessage }}</p>
+                        </div>
+
+                        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-form">
+                            <!-- Nom -->
+                            <div class="form-group">
+                                <label for="name" class="form-label">
+                                    Nom complet <span class="required">*</span>
+                                </label>
+                                <input type="text" id="name" formControlName="name" class="form-control"
+                                    [class.error]="f['name'].invalid && f['name'].touched" placeholder="Votre nom">
+                                <span *ngIf="f['name'].invalid && f['name'].touched" class="error-message">
+                                    {{ getErrorMessage('name') }}
+                                </span>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="form-group">
+                                <label for="email" class="form-label">
+                                    Email <span class="required">*</span>
+                                </label>
+                                <input type="email" id="email" formControlName="email" class="form-control"
+                                    [class.error]="f['email'].invalid && f['email'].touched"
+                                    placeholder="votre.email@example.com">
+                                <span *ngIf="f['email'].invalid && f['email'].touched" class="error-message">
+                                    {{ getErrorMessage('email') }}
+                                </span>
+                            </div>
+
+                            <!-- Sujet -->
+                            <div class="form-group">
+                                <label for="subject" class="form-label">
+                                    Sujet <span class="required">*</span>
+                                </label>
+                                <input type="text" id="subject" formControlName="subject" class="form-control"
+                                    [class.error]="f['subject'].invalid && f['subject'].touched"
+                                    placeholder="Sujet de votre message">
+                                <span *ngIf="f['subject'].invalid && f['subject'].touched" class="error-message">
+                                    {{ getErrorMessage('subject') }}
+                                </span>
+                            </div>
+
+                            <!-- Message -->
+                            <div class="form-group">
+                                <label for="message" class="form-label">
+                                    Message <span class="required">*</span>
+                                </label>
+                                <textarea id="message" formControlName="message" class="form-control"
+                                    [class.error]="f['message'].invalid && f['message'].touched" rows="6"
+                                    placeholder="Votre message..."></textarea>
+                                <span *ngIf="f['message'].invalid && f['message'].touched" class="error-message">
+                                    {{ getErrorMessage('message') }}
+                                </span>
+                            </div>
+
+                            <!-- Bouton d'envoi -->
+                            <button type="submit" class="btn btn-primary btn-lg submit-btn" [disabled]="isSubmitting">
+                                <span *ngIf="!isSubmitting">
+                                    <i class="fas fa-paper-plane"></i>
+                                    Envoyer le message
+                                </span>
+                                <span *ngIf="isSubmitting">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    Envoi en cours...
+                                </span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<app-footer></app-footer>
